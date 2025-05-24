@@ -1,0 +1,25 @@
+.page-numbers {
+    @apply flex items-center m-0 p-0;
+}
+
+.page-numbers .page-numbers {
+    @apply inline-flex items-center justify-center h-10 px-4 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-dark-200 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-dark-100;
+}
+
+.page-numbers .current {
+    @apply z-10 text-primary bg-primary-50 border-primary-300 hover:bg-primary-50 hover:text-primary dark:border-primary-600 dark:bg-primary-900/20 dark:text-primary-300;
+}
+
+.page-numbers .dots {
+    @apply text-gray-500 dark:text-gray-400;
+}
+
+/* Fix navigation arrows alignment */
+.page-numbers .prev,
+.page-numbers .next {
+    @apply p-0;
+}
+
+.page-numbers svg {
+    @apply m-auto;
+}

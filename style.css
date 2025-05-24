@@ -4,7 +4,7 @@ Theme URI:      https://store.pelatform.com/
 Author:         Pelatform Dev
 Author URI:     https://pelatform.com/
 Description:    A minimal and fast WordPress theme built as a lightweight foundation for custom websites.
-Version:        1.0.0
+Version:        1.0.1
 License:        GPL-2.0+
 License URI:    https://www.gnu.org/licenses/gpl-2.0.html
 Tags:           one-column, full-width-template, custom-background, custom-logo, custom-menu
@@ -193,45 +193,192 @@ Copyright:      © 2025 Pelatform Dev. Licensed under GPL v2 or later.
 }
 
 /* Pagination Styles */
-.pagination-nav {
-    @apply mt-12;
+.pagination-wrapper {
+    @apply inline-flex overflow-hidden rounded-md shadow-sm;
 }
 
-.pagination-nav ul {
-    @apply flex items-center p-0 m-0 list-none;
+.pagination-wrapper .page-numbers {
+    @apply relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 dark:bg-dark-200 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-dark-300;
 }
 
-.pagination-nav li {
-    @apply m-0;
+.pagination-wrapper .page-numbers.current {
+    @apply z-10 text-white bg-primary border-primary hover:bg-primary-dark;
 }
 
-.pagination-nav .page-numbers {
-    @apply inline-flex items-center justify-center text-gray-700 transition-colors border-r border-gray-200 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-dark-300 dark:border-gray-700 last:border-r-0;
-}
-
-.pagination-nav .page-numbers.current {
-    @apply text-white bg-primary border-primary hover:bg-primary;
-}
-
-.pagination-nav .prev {
+.pagination-wrapper .page-numbers.prev {
     @apply rounded-l-md;
 }
 
-.pagination-nav .next {
+.pagination-wrapper .page-numbers.next {
     @apply rounded-r-md;
 }
 
-.pagination-nav .dots {
-    @apply px-4 py-2 text-sm text-gray-500 cursor-default dark:text-gray-400 hover:bg-transparent;
+.pagination-wrapper .page-numbers.dots {
+    @apply cursor-default hover:bg-transparent;
+}
+
+/* Remove border from adjacent elements */
+.pagination-wrapper .page-numbers:not(:first-child) {
+    @apply -ml-px;
+}
+
+/* Hide screen reader text but maintain accessibility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Pagination Styling */
+.page-numbers {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none !important;
+}
+
+.page-numbers li {
+    display: inline-flex;
+    margin: 0;
+}
+
+.page-numbers .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;
+    padding: 0 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6B7280;
+    background-color: #fff;
+    border: 1px solid #E5E7EB;
+    transition: all 0.2s;
+}
+
+.page-numbers .page-numbers:hover {
+    background-color: #F9FAFB;
+    color: #374151;
+}
+
+.page-numbers .page-numbers.current {
+    position: relative;
+    z-index: 10;
+    color: var(--wp--preset--color--primary);
+    background-color: #EFF6FF;
+    border-color: #93C5FD;
+}
+
+.page-numbers .page-numbers.dots {
+    padding: 0 0.5rem;
+    color: #6B7280;
+    cursor: default;
+}
+
+.page-numbers .prev,
+.page-numbers .next {
+    padding: 0;
+    width: 2.5rem;
+}
+
+.page-numbers .prev svg,
+.page-numbers .next svg {
+    margin: auto;
+}
+
+.page-numbers li:first-child .page-numbers {
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+.page-numbers li:last-child .page-numbers {
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
 }
 
 /* Dark mode support */
-.dark .nav-links .page-numbers {
-    background-color: #374151;
-    color: #fff;
+@media (prefers-color-scheme: dark) {
+    .page-numbers .page-numbers {
+        background-color: #1F2937;
+        border-color: #374151;
+        color: #9CA3AF;
+    }
+    
+    .page-numbers .page-numbers:hover {
+        background-color: #374151;
+        color: #E5E7EB;
+    }
+    
+    .page-numbers .page-numbers.current {
+        background-color: rgba(59, 130, 246, 0.1);
+        border-color: #2563EB;
+        color: #60A5FA;
+    }
+    
+    .page-numbers .page-numbers.dots {
+        color: #9CA3AF;
+    }
 }
 
-.dark .nav-links .page-numbers:hover:not(.current) {
-    background-color: #4b5563;
+/* Pagination Styling */
+.page-numbers {
+    @apply flex items-center m-0 p-0 !list-none;
+}
+
+.page-numbers li {
+    @apply inline-flex m-0;
+}
+
+.page-numbers .page-numbers {
+    @apply inline-flex items-center justify-center h-10 px-4 text-sm font-medium text-gray-500 bg-white border border-gray-300 transition-colors hover:bg-gray-50 hover:text-gray-700 dark:bg-dark-200 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-dark-100;
+}
+
+.page-numbers .page-numbers.current {
+    @apply z-10 text-primary bg-primary-50 border-primary-300 hover:bg-primary-50 hover:text-primary dark:border-primary-600 dark:bg-primary-900/20 dark:text-primary-300;
+}
+
+.page-numbers .page-numbers.dots {
+    @apply px-2 text-gray-500 cursor-default dark:text-gray-400 hover:bg-transparent;
+}
+
+/* Fix navigation arrows alignment */
+.page-numbers .prev,
+.page-numbers .next {
+    @apply p-0;
+}
+
+.page-numbers svg {
+    @apply m-auto;
+}
+
+/* Round corners for first and last items */
+.page-numbers li:first-child .page-numbers {
+    @apply rounded-l-lg border-r-0;
+}
+
+.page-numbers li:last-child .page-numbers {
+    @apply rounded-r-lg;
+}
+
+/* Remove list styles and make items horizontal */
+.page-numbers {
+    list-style: none !important;
+    display: inline-flex !important;
+    flex-direction: row !important;
+}
+
+.page-numbers li:first-child .page-numbers {
+    @apply rounded-l-lg;
+}
+
+.page-numbers li:last-child .page-numbers {
+    @apply border-r-0 rounded-r-lg;
 }
 

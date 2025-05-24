@@ -5,11 +5,11 @@
  * @package Pelatform_Lite
  */
 
-get_header();
-
 if ( function_exists( 'edd__utils' ) ) {
 	edd__utils( 'template', 'is_header' );
 	edd__utils( 'template', 'is_navbar' );
+} else {
+	get_header();
 }
 ?>
 
@@ -106,5 +106,6 @@ if ( function_exists( 'edd__utils' ) ) {
 <?php
 if ( function_exists( 'edd__utils' ) ) {
 	edd__utils( 'template', 'is_footer' );
+} else {
+	get_footer();
 }
-get_footer();

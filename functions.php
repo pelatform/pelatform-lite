@@ -4,7 +4,7 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! defined( 'PELATFORM_LITE_VERSION' ) ) {
-	define( 'PELATFORM_LITE_VERSION', '1.0.0' );
+	define( 'PELATFORM_LITE_VERSION', '1.0.1' );
 }
 
 if ( ! defined( 'PELATFORM_LITE_PATH' ) ) {
@@ -132,6 +132,7 @@ add_action( 'after_setup_theme', 'pelatform_lite_register_menus' );
 /**
  * Custom comment callback
  *
+ * @since 1.0.1
  * @param WP_Comment $comment Comment object.
  * @param array      $args    Arguments passed to the callback.
  * @param int        $depth   Depth of the current comment in the tree.
@@ -178,16 +179,4 @@ function pelatform_lite_comment_callback( $comment, $args, $depth ) {
 			</div>
 		</article>
 	<?php
-}
-
-/**
- * Add custom colors to Tailwind config
- */
-function pelatform_lite_custom_colors() {
-	return array(
-		'primary' => array(
-			'DEFAULT' => '#3B82F6', // Adjust this color as needed
-			'dark'    => '#2563EB',
-		),
-	);
 }

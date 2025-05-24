@@ -5,11 +5,11 @@
  * @package Pelatform_Lite
  */
 
-get_header();
-
 if ( function_exists( 'edd__utils' ) ) {
 	edd__utils( 'template', 'is_header' );
 	edd__utils( 'template', 'is_navbar' );
+} else {
+	get_header();
 }
 ?>
 
@@ -87,22 +87,20 @@ if ( function_exists( 'edd__utils' ) ) {
 			<div class="flex justify-center mt-12">
 				<?php
 				$args = array(
-					'mid_size'           => 2,
-					'prev_text'          => sprintf(
-						'<span class="flex items-center px-4 py-2 text-sm font-medium"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>%s</span>',
-						esc_html__( 'Prev', 'pelatform-lite' )
-					),
-					'next_text'          => sprintf(
-						'<span class="flex items-center px-4 py-2 text-sm font-medium">%s<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>',
-						esc_html__( 'Next', 'pelatform-lite' )
-					),
+					'base'               => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
+					'format'             => '?paged=%#%',
+					'current'            => max( 1, get_query_var( 'paged' ) ),
+					'total'              => $wp_query->max_num_pages,
 					'type'               => 'list',
-					'before_page_number' => '<span class="inline-flex items-center justify-center w-10 h-10 text-sm font-medium">',
+					'mid_size'           => 1,
+					'prev_text'          => '<span class="flex items-center justify-center w-10 h-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></span>',
+					'next_text'          => '<span class="flex items-center justify-center w-10 h-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>',
+					'before_page_number' => '<span class="flex items-center justify-center w-10 h-10">',
 					'after_page_number'  => '</span>',
 				);
 				?>
-				<nav class="inline-flex bg-white rounded-md shadow-sm pagination-nav dark:bg-dark-200" aria-label="<?php esc_attr_e( 'Posts Navigation', 'pelatform-lite' ); ?>">
-					<?php echo wp_kses_post( paginate_links( $args ) ); ?>
+				<nav class="inline-flex items-center overflow-hidden bg-white rounded-lg shadow-sm dark:bg-dark-200" aria-label="<?php esc_attr_e( 'Posts Navigation', 'pelatform-lite' ); ?>">
+					<?php echo paginate_links( $args ); ?>
 				</nav>
 			</div>
 
@@ -118,5 +116,6 @@ if ( function_exists( 'edd__utils' ) ) {
 <?php
 if ( function_exists( 'edd__utils' ) ) {
 	edd__utils( 'template', 'is_footer' );
+} else {
+	get_footer();
 }
-get_footer();

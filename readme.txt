@@ -32,5 +32,9 @@ Coming soon
 
 == Changelog ==
 
+1.0.1 - 24 May 2025
+* Added: Archive
+* Added: Single post
+
 1.0.0 - 23 March 2025
 * Initial Release
