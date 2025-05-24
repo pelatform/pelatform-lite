@@ -25,6 +25,10 @@ function pelatform_lite_setup() {
 
 	add_theme_support( 'post-thumbnails' );
 
+	add_theme_support( 'custom-logo' );
+
+	add_post_type_support( 'page', 'excerpt' );
+
 	add_theme_support(
 		'html5',
 		apply_filters(
@@ -104,4 +108,86 @@ function pelatform_lite_send_new_user_notifications( $user_id, $notify = 'user' 
 		$notify = 'user';
 	}
 	wp_send_new_user_notifications( $user_id, $notify );
+}
+
+/**
+ * Registers navigation menu locations for the theme.
+ *
+ * This function registers the 'primary' menu location to be used
+ * with wp_nav_menu(). It allows users to assign a custom menu
+ * via the WordPress admin under Appearance > Menus.
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function pelatform_lite_register_menus() {
+	register_nav_menus(
+		array(
+			'primary' => __( 'Primary Menu', 'pelatform-lite' ),
+		)
+	);
+}
+add_action( 'after_setup_theme', 'pelatform_lite_register_menus' );
+
+/**
+ * Custom comment callback
+ *
+ * @param WP_Comment $comment Comment object.
+ * @param array      $args    Arguments passed to the callback.
+ * @param int        $depth   Depth of the current comment in the tree.
+ */
+function pelatform_lite_comment_callback( $comment, $args, $depth ) {
+	?>
+	<li id="comment-<?php comment_ID(); ?>" <?php comment_class( 'comment' ); ?>>
+		<article class="comment-body">
+			<div class="comment-author vcard">
+				<?php echo get_avatar( $comment, $args['avatar_size'] ); ?>
+				<?php printf( '<cite class="fn">%s</cite>', get_comment_author_link() ); ?>
+			</div>
+
+			<div class="comment-metadata">
+				<time datetime="<?php comment_time( 'c' ); ?>">
+					<?php
+					printf(
+						/* translators: 1: Comment date, 2: Comment time */
+						esc_html__( '%1$s at %2$s', 'pelatform-lite' ),
+						esc_html( get_comment_date() ),
+						esc_html( get_comment_time() )
+					);
+					?>
+				</time>
+				<?php edit_comment_link( __( 'Edit', 'pelatform-lite' ), ' <span class="edit-link">', '</span>' ); ?>
+			</div>
+
+			<div class="comment-content">
+				<?php comment_text(); ?>
+			</div>
+
+			<div class="reply">
+				<?php
+				comment_reply_link(
+					array_merge(
+						$args,
+						array(
+							'depth'     => $depth,
+							'max_depth' => $args['max_depth'],
+						)
+					)
+				);
+				?>
+			</div>
+		</article>
+	<?php
+}
+
+/**
+ * Add custom colors to Tailwind config
+ */
+function pelatform_lite_custom_colors() {
+	return array(
+		'primary' => array(
+			'DEFAULT' => '#3B82F6', // Adjust this color as needed
+			'dark'    => '#2563EB',
+		),
+	);
 }
